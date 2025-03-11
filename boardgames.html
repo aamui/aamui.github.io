@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Board Games - Aaron Mui</title>
+    <title>Board Games</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -12,26 +12,10 @@
             margin: 0 auto;
             padding: 10px;
             color: #333;
-        }
-        
-        h1, h2 {
-            font-weight: bold;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        h2 {
-            font-size: 1.8rem;
-            margin-top: 1rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        p {
-            margin-top: 0.3rem;
-            margin-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Make body take at least full viewport height */
+            justify-content: center; /* Center content vertically */
         }
         
         a {
@@ -46,6 +30,7 @@
         ul {
             padding-left: 20px;
             margin-top: 0.3rem;
+            list-style-type: disc; /* Ensures bullet points are displayed */
         }
         
         li {
@@ -61,15 +46,10 @@
             body {
                 padding: 10px;
             }
-            h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
 <body>
-<!--     <h1>Board Games</h1> -->
-    
     <ul>
         <li><a href="https://boardgamegeek.com/boardgame/256960/pax-pamir-second-edition">Pax Pamir: 2ed</a></li>
         <li><a href="https://boardgamegeek.com/boardgame/397598/dune-imperium-uprising">Dune Imperium: Uprising</a></li>
