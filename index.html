@@ -10,18 +10,18 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 10px 20px;
-            line-height: 1.2; /* Reduced from 1.5 for tighter line spacing */
+            line-height: 1.2;
         }
         
         p {
             margin-top: 0;
-            margin-bottom: 0; /* Removes spacing between paragraphs */
-            line-height: 1; /* Tightest possible line spacing within paragraphs */
+            margin-bottom: 0;
+            line-height: 1;
         }
         h4 {
             color: #333366;
             font-size: 2em;
-            margin-bottom: 0px; /* Reduced from 20px to bring email closer */
+            margin-bottom: 0px;
             margin-top: 10px;
         }
         h5 {
@@ -43,19 +43,21 @@
             text-decoration: underline;
         }
         .email {
-            margin-top: 0; /* Remove top margin */
-            margin-bottom: 10px; /* Add space after the email before content */
+            margin-top: 0;
+            margin-bottom: 10px;
         }
-        .main-content {
+        .top-section {
             display: flex;
             gap: 30px;
+            margin-bottom: 20px; /* Space after the top section */
         }
-        .text-content {
+        .bio-content {
             flex: 3;
         }
         .photo {
             flex: 1;
             max-width: 300px;
+            align-self: flex-start; /* Aligns the photo to the top */
         }
         .photo img {
             max-width: 100%;
@@ -78,31 +80,32 @@
     <h4>Aaron Mui</h4>
     <p class="email">armui [at] uci [dot] edu</p>
 
-    <div class="main-content">
-        <div class="text-content">
+    <!-- Top section with bio and photo -->
+    <div class="top-section">
+        <div class="bio-content">
             <p>I am first year computer science PhD student at UC Irvine advised by <a href="https://ics.uci.edu/~sudderth/">Prof. Erik Sudderth</a>. I am interested in probabilistic machine learning, generative models, and reasoning. During my free time I enjoy reading fantasy + science-fiction books, playing board games, and supporting my favorite sports teams.</p>
-            
-            <h5>Some Links</h5>
-            <div class="contact-item">
-                <a href="https://www.goodreads.com/user/show/158097135-aaron-mui">Goodreads</a>
-            </div>
-
-            <h5>Currently</h5>
-            <p>Reading <a href="https://www.goodreads.com/book/show/55401.Deadhouse_Gates">Deadhouse Gates</a> by Steven Erikson & learning to play tennis.</p>
-
-            <h5>Microblog</h5>
-            <p>[Dec 01 2023] Hello world :)</p>
         </div>
         
-        <!-- If you want to add a photo like in the first example -->
         <div class="photo">
-            <img src="/photos/me_and_blake.jpg" alt="meblake">
+            <img src="/photos/me_and_blake2.jpg" alt="meblake">
         </div>
     </div>
 
+    <!-- Remaining sections that will appear below the photo -->
+    <h5>Some Links</h5>
+    <div class="contact-item">
+        <a href="https://www.goodreads.com/user/show/158097135-aaron-mui">Goodreads</a>
+    </div>
+
+    <h5>Currently</h5>
+    <p>Reading <a href="https://www.goodreads.com/book/show/55401.Deadhouse_Gates">Deadhouse Gates</a> by Steven Erikson & learning to play tennis.</p>
+
+    <h5>Microblog</h5>
+    <p>[Dec 01 2023] Hello world :)</p>
+
     <!-- Uncomment this section if you want to add publications like in the first example -->
     <!--
-    <h3>Publications</h3>
+    <h5>Publications</h5>
     <ul>
         <li class="publication-item">
             Your publication details here
