@@ -1,113 +1,228 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Aaron Mui</title>
+
     <style>
+
         body {
+
             font-family: Arial, sans-serif;
+
             max-width: 900px;
+
             margin: 0 auto;
-            padding: 10px 20px; /* Reduced top padding from 20px to 10px */
+
+            padding: 10px 20px;
+
             line-height: 1.2; /* Reduced from 1.5 for tighter line spacing */
+
         }
-        
+
+
+
         p {
+
             margin-top: 0;
+
             margin-bottom: 0; /* Removes spacing between paragraphs */
+
             line-height: 1; /* Tightest possible line spacing within paragraphs */
+
         }
-        h3 {
-            color: #333366;
-            font-size: 2em;
-            margin-bottom: 1px;
-            margin-top: 0; /* This removes the top margin */
-        }
+
         h4 {
+
             color: #333366;
-            font-size: 1.2em;
+
+
+            font-size: 2em;
+
+
+            margin-bottom: 0px; /* Reduced from 20px to bring email closer */
+
+            margin-top: 10px;
+
+        }
+
+        h5 {
+
+            color: #333366;
+
+
+            font-size: 1.3em;
+
             border-bottom: 4px solid #333366;
+
             padding-bottom: 5px;
-            margin-top: 40px;
+
+            margin-top: 25px;
+
             margin-bottom: 8px;
+
         }
-        h4 + p, h4 + div {
+
+        h5 + p, h5 + div {
+
             margin-top: 8px;
+
         }
+
         a {
+
             color: blue;
+
             text-decoration: none;
+
         }
+
         a:hover {
+
             text-decoration: underline;
+
         }
+
         .email {
+
             margin-top: 0; /* Remove top margin */
-            margin-bottom: 30px; /* Add space after the email before content */
+
+            margin-bottom: 10px; /* Add space after the email before content */
+
         }
+
         .main-content {
+
             display: flex;
+
             gap: 30px;
+
         }
+
         .text-content {
+
             flex: 3;
+
         }
+
         .photo {
+
             flex: 1;
+
             max-width: 300px;
+
         }
+
         .photo img {
+
             max-width: 100%;
+
             height: auto;
+
         }
+
         .contact-item {
+
             margin-bottom: 10px;
+
         }
+
         .publication-item {
+
             margin-bottom: 15px;
+
             margin-left: 20px;
+
         }
+
         ul {
+
             list-style-type: disc;
+
             padding-left: 20px;
+
         }
+
     </style>
+
 </head>
+
 <body>
-    <h3>Aaron Mui</h3>
+
+    <h4>Aaron Mui</h4>
+
     <p class="email">armui [at] uci [dot] edu</p>
 
+
+
     <div class="main-content">
+
         <div class="text-content">
+
             <p>I am first year computer science PhD student at UC Irvine advised by <a href="https://ics.uci.edu/~sudderth/">Prof. Erik Sudderth</a>. I am interested in probabilistic machine learning, generative models, and reasoning. During my free time I enjoy reading fantasy + science-fiction books, playing board games, and supporting my favorite sports teams.</p>
-            
-            <h4>Some Links</h4>
+
+
+
+            <h5>Some Links</h5>
+
             <div class="contact-item">
+
                 <a href="https://www.goodreads.com/user/show/158097135-aaron-mui">Goodreads</a>
+
             </div>
 
-            <h4>Currently</h4>
+
+
+            <h5>Currently</h5>
+
             <p>Reading <a href="https://www.goodreads.com/book/show/55401.Deadhouse_Gates">Deadhouse Gates</a> by Steven Erikson & learning to play tennis.</p>
 
-            <h4>Microblog</h4>
+
+
+            <h5>Microblog</h5>
+
             <p>[Dec 01 2023] Hello world :)</p>
+
         </div>
-        
+
+
+
         <!-- If you want to add a photo like in the first example -->
+
         <!-- <div class="photo">
+
             <img src="your-photo.jpg" alt="Aaron Mui">
+
         </div> -->
+
     </div>
 
+
+
     <!-- Uncomment this section if you want to add publications like in the first example -->
+
     <!--
-    <h4>Publications</h4>
+
+    <h3>Publications</h3>
+
     <ul>
+
         <li class="publication-item">
+
             Your publication details here
+
         </li>
+
     </ul>
+
     -->
+
 </body>
+
 </html>
