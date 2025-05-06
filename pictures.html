@@ -38,11 +38,13 @@
         
         .gallery-item {
             overflow: hidden;
+            height: 200px;
         }
         
         .gallery-item img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
         
@@ -56,13 +58,12 @@
 <body>
     <h1>Pictures</h1>
 
-        <div class="gallery">
+    <div class="gallery">
         <div class="gallery-item">
             <img src="photos/azula.jpg" alt="azulablanket">
             <div class="caption">Azula</div>
         </div>
     
-    <div class="gallery">
         <div class="gallery-item">
             <img src="photos/me_and_blake2.jpg" alt="meandblake">
             <div class="caption">Me and my moms cat Blake</div>
