@@ -6,90 +6,95 @@
     <title>Aaron Mui</title>
     <style>
         body {
-            font-family: 'Courier New', monospace;
-            line-height: 1.6;
-            max-width: 800px;
+            font-family: Arial, sans-serif;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 10px;
-            color: #333;
+            padding: 20px;
+            line-height: 1.5;
         }
-        
-        h1, h2 {
-            font-weight: bold;
-        }
-        
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            color: #333366;
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
-        
         h2 {
-            font-size: 1.8rem;
-            margin-top: 1rem;
-            margin-bottom: 0.15rem; /* Reduced space after heading */
-/*             border-bottom: 1px solid #ddd */
-/*             padding-bottom: 0.5rem; */
+            color: #333366;
+            font-size: 1.8em;
+            border-bottom: 2px solid #333366;
+            padding-bottom: 5px;
+            margin-top: 40px;
         }
-        
-        p {
-            margin-top: 0.15rem; /* Reduced space before paragraph */
-            margin-bottom: 0.5rem; /* Control space after paragraph */
-        }
-        
         a {
-            color: #0000EE;
+            color: blue;
             text-decoration: none;
         }
-        
         a:hover {
             text-decoration: underline;
         }
-        
-        .section {
-            margin-bottom: 0.5rem;
+        .main-content {
+            display: flex;
+            gap: 30px;
         }
-        
-        .email {
-            margin-bottom: 2rem;
+        .text-content {
+            flex: 3;
         }
-        
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
+        .photo {
+            flex: 1;
+            max-width: 300px;
+        }
+        .photo img {
+            max-width: 100%;
+            height: auto;
+        }
+        .contact-item {
+            margin-bottom: 10px;
+        }
+        .publication-item {
+            margin-bottom: 15px;
+            margin-left: 20px;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Aaron Mui</h1>
-    
-    <div class="email">
-        armui [at] uci [dot] edu
+
+    <div class="main-content">
+        <div class="text-content">
+            <p>armui [at] uci [dot] edu</p>
+
+            <h2>Who am I?</h2>
+            <p>I am first year computer science PhD student at UC Irvine advised by <a href="https://ics.uci.edu/~sudderth/">Prof. Erik Sudderth</a>. I am interested in probabilistic machine learning, generative models, and reasoning. During my free time I enjoy reading fantasy + science-fiction books, playing board games, and supporting my favorite sports teams.</p>
+
+            <h2>Some Links</h2>
+            <div class="contact-item">
+                <a href="https://www.goodreads.com/user/show/158097135-aaron-mui">Goodreads</a>
+            </div>
+
+            <h2>Currently</h2>
+            <p>Reading <a href="https://www.goodreads.com/book/show/55401.Deadhouse_Gates">Deadhouse Gates</a> by Steven Erikson & learning to play tennis.</p>
+
+            <h2>Microblog</h2>
+            <p>[Dec 01 2023] Hello world :)</p>
+        </div>
+        
+        <!-- If you want to add a photo like in the first example -->
+        <!-- <div class="photo">
+            <img src="your-photo.jpg" alt="Aaron Mui">
+        </div> -->
     </div>
-    
-    <div class="section">
-        <h2>Who am I?</h2>
-        <p>I am first year computer science PhD student at UC Irvine advised by <a href="https://ics.uci.edu/~sudderth/">Prof. Erik Sudderth</a>. 
-            I am interested in probabilistic machine learning, generative models, and reasoning.
-            During my free time I enjoy reading fantasy + science-fiction books, playing board games, and supporting my favorite sports teams.</p>
-    </div>
-    
-    <div class="section">
-        <h2>Some Links</h2>
-        <p><a href="https://www.goodreads.com/user/show/158097135-aaron-mui">Goodreads</a></p>
-    </div>
-    
-    <div class="section">
-        <h2>Currently</h2>
-        <p>Reading <a href="https://www.goodreads.com/book/show/55401.Deadhouse_Gates">Deadhouse Gates</a> by Steven Erikson & learning to play tennis.</p>
-    </div>
-    
-    <div class="section">
-        <h2>Microblog</h2>
-        <p>[Dec 01 2023] Hello world :)</p>
-    </div>
+
+    <!-- Uncomment this section if you want to add publications like in the first example -->
+    <!--
+    <h2>Publications</h2>
+    <ul>
+        <li class="publication-item">
+            Your publication details here
+        </li>
+    </ul>
+    -->
 </body>
 </html>
