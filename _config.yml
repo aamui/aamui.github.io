@@ -1,0 +1,34 @@
+# Site settings
+title: Aaron Mui
+email: armui [at] uci [dot] edu
+description: >-
+  Personal website of Aaron Mui, PhD student at UC Irvine studying 
+  probabilistic machine learning, generative models, and reasoning.
+# Use your custom domain as the main URL
+url: "https://aaronmui.com"
+# Leave baseurl empty since it's at the root of your domain
+baseurl: ""
+
+# GitHub username for GitHub Pages functionality
+github_username: aamui
+
+# Build settings
+# Remove or comment out theme if specified to use your custom layouts
+# theme: minima
+plugins:
+  - jekyll-feed
+
+# Include or exclude specific files
+include:
+  - photos
+  - _layouts
+  - _includes
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Custom settings for your site
+timezone: America/Los_Angeles
+permalink: pretty  # Creates URLs without .html extension

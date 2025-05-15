@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }}{% else %}Aaron Mui's Homepage{% endif %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            line-height: 1.2;
+        }
+        
+        p {
+            margin-top: 0;
+            font-size: 11pt;
+            margin-bottom: 0;
+            line-height: 1;
+        }
+        h1 {
+            color: #255799;
+            font-size: 1.8em;
+            margin-bottom: 0px;
+            margin-top: 7px;
+        }
+
+        h2 {
+            color: #255799;
+            font-size: 1.4em;
+            border-bottom: 2.5px solid #255799;
+            padding-bottom: 5px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        h2 + p, h2 + div {
+            margin-top: 8px;
+        }
+
+        a {
+            color: blue;
+            font-size: 1em;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .email {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 30px;
+        }
+
+        .text-content {
+            flex: 3;
+        }
+
+        .photo {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .photo img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    {{ content }}
+</body>
+</html>
