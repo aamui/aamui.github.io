@@ -32,3 +32,5 @@ exclude:
 # Custom settings for your site
 timezone: America/Los_Angeles
 permalink: pretty  # Creates URLs without .html extension
+# Put all posts under /blog/title
+permalink: /blog/:title/
