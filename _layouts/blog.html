@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }}{% else %}Aaron Mui's Blog{% endif %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            line-height: 1.2;
+        }
+        
+        p {
+            margin-top: 0;
+            font-size: 9pt;
+            margin-bottom: 0;
+            line-height: 1;
+        }
+        
+        h2 {
+            color: #255799;
+            font-size: 1.4em;
+            border-bottom: 2.5px solid #255799;
+            padding-bottom: 5px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        h3 {
+            color: blue;
+            margin-bottom: 0;
+            margin-top: 15px;
+        }
+
+        a {
+            color: blue;
+            font-size: 1em;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .post-date {
+            color: #666;
+            font-style: italic;
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .blog-post-preview {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    {{ content }}
+</body>
+</html>

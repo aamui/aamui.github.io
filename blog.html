@@ -1,0 +1,15 @@
+---
+layout: blog
+title: Blog
+---
+
+<h2>Blog</h2>
+
+<div class="blog-list">
+  {% for post in site.posts %}
+    <div class="blog-post-preview">
+      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      <p class="post-date">{{ post.date | date: "%B %d, %Y" }}</p>
+    </div>
+  {% endfor %}
+</div>
