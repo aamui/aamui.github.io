@@ -1,0 +1,571 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+    <title>Merry Christmas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow: hidden;
+            background: #000;
+            font-family: 'Georgia', serif;
+        }
+        
+        canvas {
+            display: block;
+            background: #000;
+        }
+        
+        .message {
+            position: absolute;
+            top: 45%;
+            left: 12%;
+            transform: translateY(-50%);
+            text-align: left;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .message h1 {
+            font-family: 'Pinyon Script', cursive;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #fff;
+            font-weight: normal;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 150, 200, 0.8);
+        }
+        
+        .back-link {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 14px;
+            z-index: 100;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #ff99cc;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="message">
+        <h1>Merry Christmas</h1>
+    </div>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let time = 0;
+        let stars = [];
+        let treeParticles = [];
+        let orbitParticles = [];
+        let floatingParticles = [];
+        let shootingStars = [];
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            init();
+        }
+        
+        // Create dense starfield
+        function createStars() {
+            stars = [];
+            const numStars = Math.floor((width * height) / 500);
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 1.5 + 0.5,
+                    brightness: Math.random(),
+                    twinkleSpeed: Math.random() * 0.02 + 0.01
+                });
+            }
+        }
+        
+        // Tree parameters
+        function getTreeParams() {
+            const treeHeight = Math.min(height * 0.6, 450);
+            const treeWidth = treeHeight * 0.45;
+            const centerX = width * 0.55;
+            const baseY = height * 0.7;
+            const tipY = baseY - treeHeight;
+            return { treeHeight, treeWidth, centerX, baseY, tipY };
+        }
+        
+        // Create tree particles
+        function createTreeParticles() {
+            treeParticles = [];
+            const { treeHeight, treeWidth, centerX, baseY, tipY } = getTreeParams();
+            
+            // Number of particles based on tree size
+            const numParticles = 3600;
+            
+            for (let i = 0; i < numParticles; i++) {
+                // Use parametric approach for tree shape
+                // const t = Math.random(); // 0 = tip, 1 = base
+                const t = Math.pow(Math.random(), 0.55);
+                const y = tipY + t * treeHeight;
+                
+                // Tree width increases towards base with some curve
+                const maxWidthAtT = t * 1.3*treeWidth * (1.1 + 0.5 * Math.pow(t, 0.9));
+                
+                // Random angle and radius for distribution
+                // const angle = Math.random() * Math.PI * 2;
+                // const radius = Math.random() * maxWidthAtT;
+                // Random angle and radius for distribution
+                const angle = Math.random() * Math.PI * 2;
+                const radius = Math.sqrt(Math.random()) * maxWidthAtT;
+                
+                // Add some spiral tendency
+                const spiralOffset = t * 2 * Math.PI;
+                const x = centerX + Math.cos(angle + spiralOffset * 0.3) * radius * 0.7 
+                        + Math.sin(angle) * radius * 0.3;
+                
+                // Color gradient from gold at top to pink/magenta at bottom
+                const hue = 320 + t * 40 + Math.random() * 20; // pink to warm pink
+                const saturation = 70 + Math.random() * 30;
+                const lightness = 60 + Math.random() * 30;
+                
+                // Some particles are more golden/white
+                const isGolden = Math.random() < 0.2;
+                const isWhite = Math.random() < 0.1;
+                
+                let color;
+                if (isWhite) {
+                    color = `hsl(0, 0%, ${85 + Math.random() * 15}%)`;
+                } else if (isGolden) {
+                    color = `hsl(${40 + Math.random() * 20}, ${80 + Math.random() * 20}%, ${60 + Math.random() * 30}%)`;
+                } else {
+                    color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                }
+                
+                treeParticles.push({
+                    x: x,
+                    y: y,
+                    baseX: x,
+                    baseY: y,
+                    size: Math.random() * 2.5 + 0.5,
+                    color: color,
+                    twinkleOffset: Math.random() * Math.PI * 2,
+                    twinkleSpeed: Math.random() * 0.03 + 0.02,
+                    drift: Math.random() * 0.5 + 0.2
+                });
+            }
+        }
+        
+        // Create orbiting particles at the base
+        // function createOrbitParticles() {
+        //     orbitParticles = [];
+        //     const { centerX, baseY, treeWidth } = getTreeParams();
+            
+        //     const numOrbits = 8;
+        //     const particlesPerOrbit = 1000;
+            
+        //     for (let orbit = 0; orbit < numOrbits; orbit++) {
+        //         const orbitRadius = treeWidth * (0.8 + orbit * 0.4);
+        //         const orbitY = baseY + 20 + orbit * 15;
+                
+        //         for (let i = 0; i < particlesPerOrbit; i++) {
+        //             const angle = (i / particlesPerOrbit) * Math.PI * 2;
+                    
+        //             // Elliptical orbit (wider than tall for perspective)
+        //             const ellipseRatio = 0.3;
+                    
+        //             orbitParticles.push({
+        //                 angle: angle,
+        //                 orbitRadius: orbitRadius * (0.9 + Math.random() * 0.2),
+        //                 orbitY: orbitY,
+        //                 centerX: centerX,
+        //                 ellipseRatio: ellipseRatio,
+        //                 speed: (0.008 + Math.random() * 0.004) * (orbit % 2 === 0 ? 1 : -1),
+        //                 size: Math.random() * 2 + 0.5,
+        //                 brightness: Math.random(),
+        //                 // Pink to white colors
+        //                 hue: 320 + Math.random() * 40
+        //             });
+        //         }
+        //     }
+        // }
+
+        // Create orbiting particles at the base
+        function createOrbitParticles() {
+            orbitParticles = [];
+            const { centerX, baseY, treeWidth } = getTreeParams();
+            
+            const numOrbits = 8;
+            const particlesPerOrbit = 1000;
+            
+            for (let orbit = 0; orbit < numOrbits; orbit++) {
+                const orbitRadius = treeWidth * (0.8 + orbit * 0.4);
+                const orbitY = baseY + 20 + orbit * 15;
+                
+                for (let i = 0; i < particlesPerOrbit; i++) {
+                    const angle = (i / particlesPerOrbit) * Math.PI * 2;
+                    
+                    // Elliptical orbit (wider than tall for perspective)
+                    const ellipseRatio = 0.3;
+                    
+                    orbitParticles.push({
+                        angle: angle,
+                        orbitRadius: orbitRadius * (0.9 + Math.random() * 0.2),
+                        orbitY: orbitY,
+                        centerX: centerX,
+                        ellipseRatio: ellipseRatio,
+                        speed: (0.008 + Math.random() * 0.004) * (orbit % 2 === 0 ? 1 : -1),
+                        size: Math.random() * 2 + 0.5,
+                        brightness: Math.random(),
+                        // Pink to white colors
+                        hue: 320 + Math.random() * 40
+                    });
+                }
+            }
+            
+            // Fill particles between the rings
+            const maxRadius = treeWidth * (0.8 + (numOrbits - 1) * 0.4);
+            const fillParticles = 3000;
+            
+            for (let i = 0; i < fillParticles; i++) {
+                // Random position within the elliptical area
+                const angle = Math.random() * Math.PI * 2;
+                const radiusRatio = Math.sqrt(Math.random()); // uniform distribution across area
+                const radius = radiusRatio * maxRadius * 1.1;
+                
+                // Y position varies based on radius (further out = lower)
+                const baseOrbitY = baseY + 20 + radiusRatio * (numOrbits - 1) * 15;
+                
+                orbitParticles.push({
+                    angle: angle,
+                    orbitRadius: radius,
+                    orbitY: baseOrbitY + (Math.random() - 0.5) * 30,
+                    centerX: centerX,
+                    ellipseRatio: 0.3,
+                    speed: (0.002 + Math.random() * 0.003) * (Math.random() > 0.5 ? 1 : -1),
+                    size: Math.random() * 1.5 + 0.3,
+                    brightness: Math.random() * 0.7,
+                    hue: 320 + Math.random() * 40,
+                    isFill: true // mark as fill particle
+                });
+            }
+            const centerFillParticles = 1000;
+            const innerRadius = treeWidth * 0.73; // matches the first orbit ring
+            
+            for (let i = 0; i < centerFillParticles; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = Math.sqrt(Math.random()) * innerRadius;
+                
+                orbitParticles.push({
+                    angle: angle,
+                    orbitRadius: radius,
+                    orbitY: baseY + 15 + Math.random() * 20,
+                    centerX: centerX,
+                    ellipseRatio: 0.3,
+                    speed: (0.001 + Math.random() * 0.002) * (Math.random() > 0.5 ? 1 : -1),
+                    size: Math.random() * 2 + 0.5,
+                    brightness: Math.random() * 0.8 + 0.2,
+                    hue: 320 + Math.random() * 40,
+                    isFill: true
+                });
+            }
+        }
+        
+        // Create floating particles that drift upward
+        function createFloatingParticles() {
+            floatingParticles = [];
+            const { centerX, baseY, tipY, treeWidth } = getTreeParams();
+            
+            for (let i = 0; i < 100; i++) {
+                floatingParticles.push({
+                    x: centerX + (Math.random() - 0.5) * treeWidth * 2,
+                    y: baseY - Math.random() * (baseY - tipY),
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: -Math.random() * 0.5 - 0.2,
+                    size: Math.random() * 2 + 0.5,
+                    life: Math.random(),
+                    hue: 320 + Math.random() * 60
+                });
+            }
+        }
+
+        // Create a shooting star
+        function createShootingStar() {
+            const { centerX } = getTreeParams();
+            
+            // Random starting position (mostly from top/sides)
+            const startX = Math.random() * width;
+            const startY = Math.random() * height * 0.4; // upper 40% of screen
+            
+            // Direction: generally downward and to one side
+            const angle = Math.random() * Math.PI / 6;
+            const direction = Math.random() > 0.5 ? 1 : -1;
+            
+            const speed = 8 + Math.random() * 8;
+            
+            shootingStars.push({
+                x: startX,
+                y: startY,
+                vx: Math.cos(angle) * speed * direction,
+                vy: Math.sin(angle) * speed,
+                size: 2 + Math.random() * 2,
+                life: 1,
+                decay: 0.0005 + Math.random() * 0.01,
+                tailLength: 5 + Math.random() * 20,
+                hue: Math.random() > 0.7 ? 320 + Math.random() * 40 : 0, // pink or white
+            });
+        }
+        function drawShootingStars() {
+            shootingStars.forEach((s, index) => {
+                s.x += s.vx;
+                s.y += s.vy;
+                s.life -= s.decay;
+                
+                if (s.life <= 0 || s.x < 0 || s.x > width || s.y > height) {
+                    shootingStars.splice(index, 1);
+                    return;
+                }
+                
+                // Draw tail
+                const gradient = ctx.createLinearGradient(
+                    s.x - s.vx * s.tailLength,
+                    s.y - s.vy * s.tailLength,
+                    s.x,
+                    s.y
+                );
+                
+                const color = s.hue === 0 
+                    ? `rgba(255, 255, 255,` 
+                    : `rgba(255, 180, 210,`;
+                
+                gradient.addColorStop(0, color + `0)`);
+                gradient.addColorStop(1, color + `${s.life})`);
+                
+                ctx.beginPath();
+                ctx.moveTo(s.x - s.vx * s.tailLength, s.y - s.vy * s.tailLength);
+                ctx.lineTo(s.x, s.y);
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = s.size * s.life;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+                
+                // Bright head
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = s.hue === 0 ? '#ffffff' : '#ffaacc';
+                ctx.fillStyle = s.hue === 0 
+                    ? `rgba(255, 255, 255, ${s.life})` 
+                    : `rgba(255, 200, 220, ${s.life})`;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+        }
+        
+        function init() {
+            createStars();
+            createTreeParticles();
+            createOrbitParticles();
+            createFloatingParticles();
+        }
+        
+        function drawStars() {
+            stars.forEach(star => {
+                const twinkle = Math.sin(time * star.twinkleSpeed + star.brightness * 10) * 0.3 + 0.7;
+                const alpha = star.brightness * twinkle;
+                
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fill();
+            });
+        }
+        
+        function drawTreeParticles() {
+            treeParticles.forEach(p => {
+                const twinkle = Math.sin(time * p.twinkleSpeed + p.twinkleOffset) * 0.4 + 0.6;
+                
+                // Subtle movement
+                const offsetX = Math.sin(time * 0.01 + p.twinkleOffset) * p.drift;
+                const offsetY = Math.cos(time * 0.01 + p.twinkleOffset) * p.drift * 0.5;
+                
+                ctx.beginPath();
+                ctx.arc(p.baseX + offsetX, p.baseY + offsetY, p.size * twinkle, 0, Math.PI * 2);
+                
+                // Glow effect
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = p.color;
+                
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = twinkle;
+                ctx.fill();
+                
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1;
+            });
+        }
+        
+        function drawOrbitParticles() {
+            const { centerX } = getTreeParams();
+            
+            orbitParticles.forEach(p => {
+                p.angle += p.speed;
+                
+                const x = p.centerX + Math.cos(p.angle) * p.orbitRadius;
+                const y = p.orbitY + Math.sin(p.angle) * p.orbitRadius * p.ellipseRatio;
+                
+                // Fade based on position (dimmer when "behind")
+                const depthFade = (Math.sin(p.angle) + 1) / 2 * 0.5 + 0.5;
+                const twinkle = Math.sin(time * 0.02 + p.brightness * 10) * 0.3 + 0.7;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, p.size * depthFade, 0, Math.PI * 2);
+                
+                const lightness = 60 + p.brightness * 30;
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = `hsl(${p.hue}, 80%, ${lightness}%)`;
+                
+                ctx.fillStyle = `hsla(${p.hue}, 80%, ${lightness}%, ${depthFade * twinkle})`;
+                ctx.fill();
+                
+                ctx.shadowBlur = 0;
+            });
+        }
+        
+        function drawFloatingParticles() {
+            const { centerX, baseY, tipY, treeWidth } = getTreeParams();
+            
+            floatingParticles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.003;
+                
+                // Reset when faded or out of bounds
+                if (p.life <= 0 || p.y < tipY - 50) {
+                    p.x = centerX + (Math.random() - 0.5) * treeWidth * 1.5;
+                    p.y = baseY;
+                    p.life = 1;
+                    p.vx = (Math.random() - 0.5) * 0.3;
+                    p.vy = -Math.random() * 0.5 - 0.2;
+                }
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = `hsl(${p.hue}, 80%, 70%)`;
+                
+                ctx.fillStyle = `hsla(${p.hue}, 80%, 70%, ${p.life * 0.6})`;
+                ctx.fill();
+                
+                ctx.shadowBlur = 0;
+            });
+        }
+        
+        // Draw heart on top of tree
+        function drawTreeHeart() {
+            const { centerX, tipY } = getTreeParams();
+            const heartY = tipY - 0.5;
+            const size = 35;
+            
+            const glow = Math.sin(time * 0.05) * 0.3 + 0.8;
+            
+            // Function to draw heart path
+            function heartPath(s) {
+                ctx.beginPath();
+                ctx.moveTo(centerX, heartY + s * 0.3);
+                ctx.bezierCurveTo(
+                    centerX - s * 0.5, heartY - s * 0.3,
+                    centerX - s, heartY + s * 0.3,
+                    centerX, heartY + s
+                );
+                ctx.bezierCurveTo(
+                    centerX + s, heartY + s * 0.3,
+                    centerX + s * 0.5, heartY - s * 0.3,
+                    centerX, heartY + s * 0.3
+                );
+            }
+            
+            // Outer glow layers (large, faint)
+            for (let i = 5; i >= 1; i--) {
+                heartPath(size + i * 6);
+                ctx.fillStyle = `rgba(255, 100, 150, ${glow * 0.03})`;
+                ctx.fill();
+            }
+            
+            // Middle glow
+            ctx.shadowBlur = 40;
+            ctx.shadowColor = `rgba(255, 150, 200, ${glow})`;
+            heartPath(size + 4);
+            ctx.fillStyle = `rgba(255, 120, 170, ${glow * 0.2})`;
+            ctx.fill();
+            
+            // Inner glow
+            ctx.shadowBlur = 25;
+            ctx.shadowColor = `rgba(255, 180, 210, ${glow})`;
+            heartPath(size + 2);
+            ctx.fillStyle = `rgba(255, 150, 190, ${glow * 0.4})`;
+            ctx.fill();
+            
+            // Core heart
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#ffaacc';
+            heartPath(size);
+            ctx.fillStyle = `rgba(255, 180, 210, ${glow * 0.9})`;
+            ctx.fill();
+            
+            // Bright center
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#ffffff';
+            heartPath(size * 0.5);
+            ctx.fillStyle = `rgba(255, 230, 240, ${glow})`;
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+        }
+        
+        function animate() {
+            // Clear canvas
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, width, height);
+            
+            time++;
+            if (Math.random() < 0.01) { // Adjust this for frequency (0.01 = ~1% chance per frame)
+                createShootingStar();
+            }
+            
+            // Draw layers
+            drawStars();
+            drawShootingStars();
+            drawOrbitParticles();
+            drawTreeParticles();
+            drawFloatingParticles();
+            drawTreeHeart();
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Event listeners
+        window.addEventListener('resize', resize);
+        
+        // Start
+        resize();
+        animate();
+    </script>
+</body>
+</html>
