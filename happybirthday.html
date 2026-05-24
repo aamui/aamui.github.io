@@ -538,14 +538,15 @@ layout: null
             ctx.shadowBlur = 0;
         }
         
-        function drawDinosaur() {
-            const s = Math.min(width * 0.13, height * 0.22);
-            const baseX = width * 0.14;
-            const baseY = height * 0.82;
-            const bob = Math.sin(time * 0.04) * 3;
+        function drawDinosaur(xFrac, yFrac, scaleMult, flip, bobOffset) {
+            const s = Math.min(width * 0.13, height * 0.22) * (scaleMult || 1);
+            const baseX = width * xFrac;
+            const baseY = height * yFrac;
+            const bob = Math.sin(time * 0.04 + (bobOffset || 0)) * 3;
 
             ctx.save();
             ctx.translate(baseX, baseY + bob);
+            if (flip) ctx.scale(-1, 1);
 
             const green = '#5dc85d';
             const darkGreen = '#3a9e3a';
@@ -686,7 +687,11 @@ layout: null
             drawTreeParticles();
             drawFloatingParticles();
             drawTreeStar();
-            drawDinosaur();
+            // xFrac, yFrac, scaleMult, flip, bobOffset
+            drawDinosaur(0.14, 0.82, 1.0,  false, 0);
+            drawDinosaur(0.30, 0.90, 0.65, false, 1.2);
+            drawDinosaur(0.80, 0.86, 0.8,  true,  2.5);
+            drawDinosaur(0.92, 0.92, 0.55, true,  0.8);
 
             requestAnimationFrame(animate);
         }
