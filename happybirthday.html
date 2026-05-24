@@ -42,7 +42,7 @@ layout: null
             color: #fff;
             font-weight: normal;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 150, 200, 0.8);
+            text-shadow: 0 0 10px rgba(100, 200, 100, 0.8);
         }
         
         .back-link {
@@ -58,14 +58,14 @@ layout: null
         }
         
         .back-link:hover {
-            color: #ff99cc;
+            color: #66cc66;
         }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
     <div class="message">
-        <h1>Merry Christmas!</h1>
+        <h1>Happy Birthday !!</h1>
     </div>
     <script>
         const canvas = document.getElementById('canvas');
@@ -139,8 +139,8 @@ layout: null
                 const x = centerX + Math.cos(angle + spiralOffset * 0.3) * radius * 0.7 
                         + Math.sin(angle) * radius * 0.3;
                 
-                // Color gradient from gold at top to pink/magenta at bottom
-                const hue = 320 + t * 40 + Math.random() * 20; // pink to warm pink
+                // Color gradient from gold at top to green at bottom
+                const hue = 100 + t * 40 + Math.random() * 20; // green to warm green
                 const saturation = 70 + Math.random() * 30;
                 const lightness = 60 + Math.random() * 30;
                 
@@ -232,8 +232,8 @@ layout: null
                         speed: (0.008 + Math.random() * 0.004) * (orbit % 2 === 0 ? 1 : -1),
                         size: Math.random() * 2 + 0.5,
                         brightness: Math.random(),
-                        // Pink to white colors
-                        hue: 320 + Math.random() * 40
+                        // Green to white colors
+                        hue: 100 + Math.random() * 40
                     });
                 }
             }
@@ -260,7 +260,7 @@ layout: null
                     speed: (0.002 + Math.random() * 0.003) * (Math.random() > 0.5 ? 1 : -1),
                     size: Math.random() * 1.5 + 0.3,
                     brightness: Math.random() * 0.7,
-                    hue: 320 + Math.random() * 40,
+                    hue: 100 + Math.random() * 40,
                     isFill: true // mark as fill particle
                 });
             }
@@ -280,7 +280,7 @@ layout: null
                     speed: (0.001 + Math.random() * 0.002) * (Math.random() > 0.5 ? 1 : -1),
                     size: Math.random() * 2 + 0.5,
                     brightness: Math.random() * 0.8 + 0.2,
-                    hue: 320 + Math.random() * 40,
+                    hue: 100 + Math.random() * 40,
                     isFill: true
                 });
             }
@@ -299,7 +299,7 @@ layout: null
                     vy: -Math.random() * 0.5 - 0.2,
                     size: Math.random() * 2 + 0.5,
                     life: Math.random(),
-                    hue: 320 + Math.random() * 60
+                    hue: 100 + Math.random() * 60
                 });
             }
         }
@@ -327,7 +327,7 @@ layout: null
                 life: 1,
                 decay: 0.0005 + Math.random() * 0.01,
                 tailLength: 5 + Math.random() * 20,
-                hue: Math.random() > 0.7 ? 320 + Math.random() * 40 : 0, // pink or white
+                hue: Math.random() > 0.7 ? 100 + Math.random() * 40 : 0, // green or white
             });
         }
         function drawShootingStars() {
@@ -351,7 +351,7 @@ layout: null
                 
                 const color = s.hue === 0 
                     ? `rgba(255, 255, 255,` 
-                    : `rgba(255, 180, 210,`;
+                    : `rgba(150, 220, 150,`;
                 
                 gradient.addColorStop(0, color + `0)`);
                 gradient.addColorStop(1, color + `${s.life})`);
@@ -368,10 +368,10 @@ layout: null
                 ctx.beginPath();
                 ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
                 ctx.shadowBlur = 10;
-                ctx.shadowColor = s.hue === 0 ? '#ffffff' : '#ffaacc';
+                ctx.shadowColor = s.hue === 0 ? '#ffffff' : '#88cc88';
                 ctx.fillStyle = s.hue === 0 
                     ? `rgba(255, 255, 255, ${s.life})` 
-                    : `rgba(255, 200, 220, ${s.life})`;
+                    : `rgba(150, 220, 150, ${s.life})`;
                 ctx.fill();
                 ctx.shadowBlur = 0;
             });
@@ -504,36 +504,36 @@ layout: null
             // Outer glow layers (large, faint)
             for (let i = 5; i >= 1; i--) {
                 heartPath(size + i * 6);
-                ctx.fillStyle = `rgba(255, 100, 150, ${glow * 0.03})`;
+                ctx.fillStyle = `rgba(50, 180, 50, ${glow * 0.03})`;
                 ctx.fill();
             }
             
             // Middle glow
             ctx.shadowBlur = 40;
-            ctx.shadowColor = `rgba(255, 150, 200, ${glow})`;
+            ctx.shadowColor = `rgba(100, 200, 100, ${glow})`;
             heartPath(size + 4);
-            ctx.fillStyle = `rgba(255, 120, 170, ${glow * 0.2})`;
+            ctx.fillStyle = `rgba(80, 190, 80, ${glow * 0.2})`;
             ctx.fill();
             
             // Inner glow
             ctx.shadowBlur = 25;
-            ctx.shadowColor = `rgba(255, 180, 210, ${glow})`;
+            ctx.shadowColor = `rgba(130, 210, 130, ${glow})`;
             heartPath(size + 2);
-            ctx.fillStyle = `rgba(255, 150, 190, ${glow * 0.4})`;
+            ctx.fillStyle = `rgba(100, 200, 100, ${glow * 0.4})`;
             ctx.fill();
             
             // Core heart
             ctx.shadowBlur = 15;
-            ctx.shadowColor = '#ffaacc';
+            ctx.shadowColor = '#77cc77';
             heartPath(size);
-            ctx.fillStyle = `rgba(255, 180, 210, ${glow * 0.9})`;
+            ctx.fillStyle = `rgba(130, 210, 130, ${glow * 0.9})`;
             ctx.fill();
             
             // Bright center
             ctx.shadowBlur = 10;
             ctx.shadowColor = '#ffffff';
             heartPath(size * 0.5);
-            ctx.fillStyle = `rgba(255, 230, 240, ${glow})`;
+            ctx.fillStyle = `rgba(200, 240, 200, ${glow})`;
             ctx.fill();
             
             ctx.shadowBlur = 0;
