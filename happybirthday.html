@@ -477,65 +477,64 @@ layout: null
             });
         }
         
-        // Draw heart on top of tree
-        function drawTreeHeart() {
+        // Draw star on top of tree
+        function drawTreeStar() {
             const { centerX, tipY } = getTreeParams();
-            const heartY = tipY - 0.5;
-            const size = 35;
-            
+            const starY = tipY - 20;
+            const outerRadius = 35;
+            const innerRadius = 14;
+            const points = 5;
+
             const glow = Math.sin(time * 0.05) * 0.3 + 0.8;
-            
-            // Function to draw heart path
-            function heartPath(s) {
+
+            function starPath(outerR, innerR) {
                 ctx.beginPath();
-                ctx.moveTo(centerX, heartY + s * 0.3);
-                ctx.bezierCurveTo(
-                    centerX - s * 0.5, heartY - s * 0.3,
-                    centerX - s, heartY + s * 0.3,
-                    centerX, heartY + s
-                );
-                ctx.bezierCurveTo(
-                    centerX + s, heartY + s * 0.3,
-                    centerX + s * 0.5, heartY - s * 0.3,
-                    centerX, heartY + s * 0.3
-                );
+                for (let i = 0; i < points * 2; i++) {
+                    const angle = (i * Math.PI / points) - Math.PI / 2;
+                    const r = i % 2 === 0 ? outerR : innerR;
+                    const x = centerX + Math.cos(angle) * r;
+                    const y = starY + Math.sin(angle) * r;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
             }
-            
-            // Outer glow layers (large, faint)
+
+            // Outer glow layers
             for (let i = 5; i >= 1; i--) {
-                heartPath(size + i * 6);
-                ctx.fillStyle = `rgba(50, 180, 50, ${glow * 0.03})`;
+                starPath(outerRadius + i * 6, innerRadius + i * 2);
+                ctx.fillStyle = `rgba(255, 220, 0, ${glow * 0.03})`;
                 ctx.fill();
             }
-            
+
             // Middle glow
             ctx.shadowBlur = 40;
-            ctx.shadowColor = `rgba(100, 200, 100, ${glow})`;
-            heartPath(size + 4);
-            ctx.fillStyle = `rgba(80, 190, 80, ${glow * 0.2})`;
+            ctx.shadowColor = `rgba(255, 200, 0, ${glow})`;
+            starPath(outerRadius + 4, innerRadius + 2);
+            ctx.fillStyle = `rgba(255, 210, 0, ${glow * 0.2})`;
             ctx.fill();
-            
+
             // Inner glow
             ctx.shadowBlur = 25;
-            ctx.shadowColor = `rgba(130, 210, 130, ${glow})`;
-            heartPath(size + 2);
-            ctx.fillStyle = `rgba(100, 200, 100, ${glow * 0.4})`;
+            ctx.shadowColor = `rgba(255, 230, 50, ${glow})`;
+            starPath(outerRadius + 2, innerRadius + 1);
+            ctx.fillStyle = `rgba(255, 220, 50, ${glow * 0.4})`;
             ctx.fill();
-            
-            // Core heart
+
+            // Core star
             ctx.shadowBlur = 15;
-            ctx.shadowColor = '#77cc77';
-            heartPath(size);
-            ctx.fillStyle = `rgba(130, 210, 130, ${glow * 0.9})`;
+            ctx.shadowColor = '#ffdd00';
+            starPath(outerRadius, innerRadius);
+            ctx.fillStyle = `rgba(255, 230, 50, ${glow * 0.9})`;
             ctx.fill();
-            
+
             // Bright center
             ctx.shadowBlur = 10;
             ctx.shadowColor = '#ffffff';
-            heartPath(size * 0.5);
-            ctx.fillStyle = `rgba(200, 240, 200, ${glow})`;
+            starPath(outerRadius * 0.5, innerRadius * 0.5);
+            ctx.fillStyle = `rgba(255, 255, 200, ${glow})`;
             ctx.fill();
-            
+
             ctx.shadowBlur = 0;
         }
         
@@ -555,7 +554,7 @@ layout: null
             drawOrbitParticles();
             drawTreeParticles();
             drawFloatingParticles();
-            drawTreeHeart();
+            drawTreeStar();
             
             requestAnimationFrame(animate);
         }
