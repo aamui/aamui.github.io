@@ -538,6 +538,137 @@ layout: null
             ctx.shadowBlur = 0;
         }
         
+        function drawDinosaur() {
+            const s = Math.min(width * 0.13, height * 0.22);
+            const baseX = width * 0.14;
+            const baseY = height * 0.82;
+            const bob = Math.sin(time * 0.04) * 3;
+
+            ctx.save();
+            ctx.translate(baseX, baseY + bob);
+
+            const green = '#5dc85d';
+            const darkGreen = '#3a9e3a';
+            const lw = Math.max(1.5, s * 0.03);
+
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = 'rgba(80, 200, 80, 0.45)';
+            ctx.strokeStyle = darkGreen;
+            ctx.lineWidth = lw;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+
+            // Tail
+            ctx.fillStyle = green;
+            ctx.beginPath();
+            ctx.moveTo(-s * 0.08, -s * 0.42);
+            ctx.quadraticCurveTo(-s * 0.55, -s * 0.28, -s * 0.82, -s * 0.12);
+            ctx.quadraticCurveTo(-s * 0.55, -s * 0.52, -s * 0.08, -s * 0.60);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Body
+            ctx.fillStyle = green;
+            ctx.beginPath();
+            ctx.ellipse(s * 0.08, -s * 0.48, s * 0.44, s * 0.27, 0.08, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Back spikes
+            ctx.fillStyle = darkGreen;
+            [[-s * 0.05, -s * 0.76], [s * 0.08, -s * 0.78], [s * 0.2, -s * 0.76]].forEach(([sx, sy]) => {
+                ctx.beginPath();
+                ctx.moveTo(sx - s * 0.035, sy);
+                ctx.lineTo(sx, sy - s * 0.13);
+                ctx.lineTo(sx + s * 0.035, sy);
+                ctx.closePath();
+                ctx.fill();
+            });
+
+            // Neck + head
+            ctx.fillStyle = green;
+            ctx.beginPath();
+            ctx.moveTo(s * 0.28, -s * 0.70);
+            ctx.lineTo(s * 0.42, -s * 1.0);
+            ctx.lineTo(s * 0.82, -s * 0.94);  // top jaw
+            ctx.lineTo(s * 0.88, -s * 0.84);  // snout tip
+            ctx.lineTo(s * 0.78, -s * 0.80);  // bottom jaw front
+            ctx.lineTo(s * 0.44, -s * 0.83);  // bottom jaw back
+            ctx.lineTo(s * 0.33, -s * 0.67);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Mouth line
+            ctx.beginPath();
+            ctx.moveTo(s * 0.88, -s * 0.84);
+            ctx.lineTo(s * 0.6, -s * 0.875);
+            ctx.strokeStyle = darkGreen;
+            ctx.lineWidth = lw * 0.8;
+            ctx.stroke();
+            ctx.lineWidth = lw;
+            ctx.strokeStyle = darkGreen;
+
+            // Tiny arm
+            ctx.fillStyle = green;
+            ctx.beginPath();
+            ctx.moveTo(s * 0.28, -s * 0.58);
+            ctx.lineTo(s * 0.44, -s * 0.43);
+            ctx.lineTo(s * 0.50, -s * 0.40);
+            ctx.lineTo(s * 0.44, -s * 0.36);
+            ctx.lineTo(s * 0.28, -s * 0.50);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Back leg
+            ctx.fillStyle = darkGreen;
+            ctx.beginPath();
+            ctx.moveTo(-s * 0.05, -s * 0.24);
+            ctx.lineTo(-s * 0.12, 0);
+            ctx.lineTo(-s * 0.18, s * 0.04);
+            ctx.lineTo(s * 0.06, s * 0.04);
+            ctx.lineTo(s * 0.10, -s * 0.22);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Front leg
+            ctx.fillStyle = green;
+            ctx.beginPath();
+            ctx.moveTo(s * 0.16, -s * 0.24);
+            ctx.lineTo(s * 0.10, 0);
+            ctx.lineTo(s * 0.16, s * 0.04);
+            ctx.lineTo(s * 0.36, s * 0.04);
+            ctx.lineTo(s * 0.34, -s * 0.22);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Eye
+            ctx.shadowBlur = 0;
+            ctx.beginPath();
+            ctx.arc(s * 0.63, -s * 0.95, s * 0.042, 0, Math.PI * 2);
+            ctx.fillStyle = '#111';
+            ctx.fill();
+
+            // Eye shine
+            ctx.beginPath();
+            ctx.arc(s * 0.645, -s * 0.965, s * 0.016, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+
+            // Nostril
+            ctx.beginPath();
+            ctx.arc(s * 0.83, -s * 0.88, s * 0.014, 0, Math.PI * 2);
+            ctx.fillStyle = darkGreen;
+            ctx.fill();
+
+            ctx.restore();
+            ctx.shadowBlur = 0;
+        }
+
         function animate() {
             // Clear canvas
             ctx.fillStyle = '#000';
@@ -555,7 +686,8 @@ layout: null
             drawTreeParticles();
             drawFloatingParticles();
             drawTreeStar();
-            
+            drawDinosaur();
+
             requestAnimationFrame(animate);
         }
         
